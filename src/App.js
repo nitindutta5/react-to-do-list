@@ -1,35 +1,84 @@
 import './App.css';
 import { useState } from 'react';
+import { Input, Button, Container, Row, Col } from 'reactstrap';
 
 function App() {
   const [myList, updateMyList] = useState([]);
   const [input, updateInput] = useState("");
+  const [detail, insertDetail] = useState("");
+  const [detailList, updateDetailList] = useState([]);
   const updateArray = () => {
     if (input != "")
       updateMyList([...myList,
-        input]
-      );
+      {
+        "title": input,
+        "details": []
+      }]);
     updateInput("");
   }
+
   const deleteItem = (index) => {
-    alert("hi")
     const newList = [...myList];
     newList.splice(index, 1);
     updateMyList(newList);
   }
+
+  const handleDetails = (title) => {
+    if (detail != "") {
+      for (let item of myList) {
+        if (item.title === title) {
+          updateDetailList([
+            ...detailList,
+            item.details.push(detail)
+          ]);
+        }
+      }
+      insertDetail("");
+    }
+
+
+  }
+
   return (
     <div className="App">
-      <h1>React To Do List</h1>
-      {
-        myList.map((i, index) =>
-          <div className="ListBox" key={index}><span>{i}</span> <span className="delete" onClick={() => deleteItem(index)}>X</span></div>
-        )
-      }
-      <div className="entrybox">
-        <input type="text" placeholder="Add List Items" value={input} onChange={e => updateInput(e.target.value)} />
-        <button onClick={updateArray}>Add Item</button>
-      </div>
-    </div >
+      <Container className="p-2">
+        <h1>React To Do List</h1>
+        <Row>
+          <Col md="6" className="mx-auto">
+            <Input type="text" placeholder="Enter List Items" value={input} onChange={e => updateInput(e.target.value)} />
+            <Button className="btn-primary  mt-2" onClick={updateArray}>Add Tasks</Button>
+          </Col>
+        </Row>
+        <Row className="mt-5">
+          {
+            myList.map((i, index) =>
+              <Col md="4" key={index}>
+                <Col md="12" className="ListBox">
+                  <h4 className="text-left">{i.title}</h4>
+                  <span className="delete"
+                    onClick={() => deleteItem(index)}>X</span>
+                  <Row>
+                    {
+                      i.details.map((detail, key) =>
+                        <Col md="12" key={key}>
+                          <Input type="text" value={detail}></Input>
+                        </Col>)
+                    }
+                    <Col md="12"
+                      className="d-flex justify-content-center">
+                      <Input type="text"
+                        placeholder="Enter details"
+                        value={detail}
+                        onChange={e => insertDetail(e.target.value)} />
+                      <Button className="btn-sm" onClick={e => (handleDetails(i.title))} >Add</Button></Col>
+                  </Row>
+                </Col>
+              </Col>
+            )
+          }
+        </Row>
+      </Container>
+    </div>
   );
 }
 

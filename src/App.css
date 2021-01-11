@@ -6,27 +6,36 @@
   height: 40vmin;
   pointer-events: none;
 }
-.mark{
-text-decoration: line-through;
+
+.mark {
+  text-decoration: line-through;
 }
 
-.nomark,.mark{
+.nomark,
+.mark {
   cursor: pointer;
 }
-.ListBox{
-  padding:10px;
-  border:1px solid #000;
-  max-width:400px;
-  margin:0px auto;
-  margin-bottom:10px;
+
+.ListBox {
+  padding: 10px;
+  border: 1px solid #000;
+  margin: 0px auto;
+  margin-bottom: 10px;
   display: flex;
   justify-content: space-between;
+  flex-direction: column;
 }
-.delete{
-  cursor:pointer;
+
+.delete {
+  cursor: pointer;
+  display: block;
+  position: absolute;
+  right: 5px;
+  top: 2px;
 }
-.entrybox{
-  margin-top:10px;
+
+.entrybox {
+  margin-top: 10px;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -54,6 +63,7 @@ text-decoration: line-through;
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
