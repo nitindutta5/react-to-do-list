@@ -7,6 +7,7 @@ function App() {
   const [input, updateInput] = useState("");
   const [detail, insertDetail] = useState("");
   const [detailList, updateDetailList] = useState([]);
+  const [edit, setEdit] = useState(false);
   const updateArray = () => {
     if (input != "")
       updateMyList([...myList,
@@ -52,7 +53,7 @@ function App() {
         <Row className="mt-5">
           {
             myList.map((i, index) =>
-              <Col md="4" key={index}>
+              <Col md="6" key={index}>
                 <Col md="12" className="ListBox">
                   <h4 className="text-left">{i.title}</h4>
                   <span className="delete"
@@ -60,8 +61,9 @@ function App() {
                   <Row>
                     {
                       i.details.map((detail, key) =>
-                        <Col md="12" key={key}>
-                          <Input type="text" value={detail}></Input>
+                        <Col md="12" key={key} className="d-flex justify-content-center mb-2"  >
+                          <Input type="text" value={detail} readOnly={edit ? false : true}></Input>
+                          <Button className="btn-sm" onClick={e => (setEdit(!edit))} >Edit</Button>
                         </Col>)
                     }
                     <Col md="12"
@@ -78,7 +80,7 @@ function App() {
           }
         </Row>
       </Container>
-    </div>
+    </div >
   );
 }
 
